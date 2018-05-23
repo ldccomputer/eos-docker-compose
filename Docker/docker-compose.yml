@@ -1,10 +1,6 @@
 version: "3"
 
 services:
-  builder:
-    build:
-      context: builder
-    image: eosio/builder
 
   nodeosd:
     build:
@@ -18,7 +14,7 @@ services:
     expose:
       - "8888"
     volumes:
-      - /data/nodeosd:/opt/eosio/bin/data-dir
+      - nodeos-data-volume:/opt/eosio/bin/data-dir
 
   keosd:
     image: eosio/eos
@@ -27,4 +23,10 @@ services:
     links:
       - nodeosd
     volumes:
-      - /data/keosd:/opt/eosio/bin/data-dir
+      - keosd-data-volume:/opt/eosio/bin/data-dir
+
+volumes:
+  nodeos-data-volume:
+    external: true
+  keosd-data-volume:
+    external: true
